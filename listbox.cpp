@@ -12,7 +12,7 @@ using namespace vb01;
 using namespace std;
 
 namespace vb01Gui{
-	Listbox::ListboxButton::ListboxButton(Listbox *l, Vector2 pos, Vector2 size, string name) : Button(pos, size, name, -1, false){listbox = l;}
+	Listbox::ListboxButton::ListboxButton(Listbox *l, Vector2 pos, Vector2 size, string name) : Button(pos, size, name, "", -1, false){listbox = l;}
 
 	void Listbox::ListboxButton::onClick(){
 		ListboxType type = listbox->getType();
@@ -39,7 +39,7 @@ namespace vb01Gui{
 		}
 	}
 
-	Listbox::ScrollingButton::ScrollingButton(Vector2 pos, Vector2 size, string name) : Button(pos, size, name, -1, false){}
+	Listbox::ScrollingButton::ScrollingButton(Vector2 pos, Vector2 size, string name) : Button(pos, size, name, "", -1, false){}
 
 	void Listbox::ScrollingButton::onClick(){}
 
@@ -57,10 +57,17 @@ namespace vb01Gui{
 		for(int i = 0; i < lines.size(); i++){
 			Text *text = new Text(fontPath, stringToWstring(lines[i]));
 			text->setScale(.2);
+
+			Material *textMat = new Material(Material::MATERIAL_TEXT);
+			textMat->setTexturingEnabled(false);
+			textMat->setDiffuseColor(Vector4::VEC_IJKL);
+			text->setMaterial(textMat);
+
 			Node *node = new Node(Vector3(pos.x, pos.y + size.y * (i + 1), -.1));
 			node->addText(text);
 			guiNode->attachChild(node);
 			node->setVisible(false);
+
 			this->lines.push_back(text);
 		}
 

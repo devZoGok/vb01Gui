@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+class GLFWwindow;
+
 namespace vb01{
 	class Quad;
 	class Node;
@@ -15,7 +17,7 @@ namespace vb01{
 namespace vb01Gui{
 	class Button{
 		public:
-			Button(vb01::Vector2, vb01::Vector2, std::string, int = -1, bool = true, std::string = "", std::string = "");
+			Button(vb01::Vector2, vb01::Vector2, std::string, std::string = "", int = -1, bool = true, std::string = "");
 			virtual ~Button();
 			void update();
 			virtual void onMouseOver();
@@ -35,7 +37,7 @@ namespace vb01Gui{
 			void setZOrder(float);
 			void setImage(std::string);
 		protected:
-			int trigger;
+			int trigger, initWindowSize[2];
 			bool separate, active = true, mouseOver = false;
 			vb01::Quad *rect;
 			vb01::Node *rectNode, *textNode = nullptr, *guiNode;

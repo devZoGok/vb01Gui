@@ -12,7 +12,7 @@ using namespace vb01;
 using namespace std;
 
 namespace vb01Gui{
-	Textbox::TextboxButton::TextboxButton(Textbox *t, Vector2 pos, Vector2 size, string name) : Button(pos, size, name, -1, false) {textbox = t;}
+	Textbox::TextboxButton::TextboxButton(Textbox *t, Vector2 pos, Vector2 size, string name) : Button(pos, size, name, "", -1, false) {textbox = t;}
 
 	void Textbox::TextboxButton::onClick(){
 		if(!textbox->isEnabled())

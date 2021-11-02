@@ -7,6 +7,7 @@
 #include <locale>
 #include <codecvt>
 #include <util.h>
+#include <glfw3.h>
 
 #include "button.h"
 
@@ -14,7 +15,7 @@ using namespace std;
 using namespace vb01;
 
 namespace vb01Gui{
-	Button::Button(Vector2 pos, Vector2 size, string name, int trigger, bool separate, string imagePath, string fontPath){
+	Button::Button(Vector2 pos, Vector2 size, string name, string fontPath, int trigger, bool separate, string imagePath){
 		this->pos = pos;
 		this->size = size;
 		this->name = name;
@@ -45,10 +46,20 @@ namespace vb01Gui{
 		if(separate){
 			text = new Text(fontPath, stringToWstring(name));
 			text->setScale(.2);
+
 			textNode = new Node(Vector3(pos.x, pos.y + size.y, - .1));
 			textNode->addText(text);
+
+			Material *textMat = new Material(Material::MATERIAL_TEXT);
+			textMat->setTexturingEnabled(false);
+			textMat->setDiffuseColor(Vector4::VEC_IJKL);
+			text->setMaterial(textMat);
+
 			guiNode->attachChild(textNode);
 		}
+
+		initWindowSize[0] = Root::getSingleton()->getWidth();
+		initWindowSize[1] = Root::getSingleton()->getHeight();
 	}
 
 	Button::~Button(){
@@ -61,7 +72,20 @@ namespace vb01Gui{
 		delete rectNode;
 	}
 
-	void Button::update(){}
+	void Button::update(){
+		int width, height;
+		GLFWwindow *window = Root::getSingleton()->getWindow();
+		glfwGetWindowSize(window, &width, &height);
+
+			float posRatio[] = {pos.x / initWindowSize[0], pos.y / initWindowSize[1]};
+			float sizeRatio[] = {size.x / initWindowSize[0], size.y / initWindowSize[1]};
+
+			pos = Vector2(width * posRatio[0], height * posRatio[1]);
+			size = Vector2(width * sizeRatio[0], height * sizeRatio[1]);
+
+			initWindowSize[0] = width;
+			initWindowSize[1] = height;
+	}
 
 	void Button::onMouseOver(){
 		mouseOver = true;

@@ -4,7 +4,7 @@ using namespace vb01;
 using namespace std;
 
 namespace vb01Gui{
-    Checkbox::CheckboxButton::CheckboxButton(Checkbox *ch, Vector2 pos, Vector2 size, string name, bool separate) : Button(pos, size, name, separate) {
+    Checkbox::CheckboxButton::CheckboxButton(Checkbox *ch, Vector2 pos, Vector2 size, string name, bool separate) : Button(pos, size, name, "", -1, separate) {
         checkbox = ch;
     }
     

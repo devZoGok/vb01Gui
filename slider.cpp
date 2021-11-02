@@ -10,7 +10,7 @@ using namespace std;
 using namespace vb01;
 
 namespace vb01Gui{
-    Slider::MovableSliderButton::MovableSliderButton(Slider *slider, Vector2 pos, Vector2 size, string name, bool separate) : Button(pos, size, name, separate) {
+    Slider::MovableSliderButton::MovableSliderButton(Slider *slider, Vector2 pos, Vector2 size, string name, bool separate) : Button(pos, size, name, "", -1, separate) {
         this->slider = slider;
     }
 
@@ -31,7 +31,7 @@ namespace vb01Gui{
         }
     }
 
-    Slider::StaticSliderButton::StaticSliderButton(Slider *slider, Vector2 pos, Vector2 size, string name, bool separate) : Button(pos, size, name, separate) {
+    Slider::StaticSliderButton::StaticSliderButton(Slider *slider, Vector2 pos, Vector2 size, string name, bool separate) : Button(pos, size, name, "", -1, separate) {
         this->slider = slider;
     }
 
