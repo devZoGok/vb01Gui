@@ -17,7 +17,7 @@ namespace vb01{
 namespace vb01Gui{
 	class Button{
 		public:
-			Button(vb01::Vector2, vb01::Vector2, std::string, std::string = "", int = -1, bool = true, std::string = "");
+			Button(vb01::Vector2, vb01::Vector2, std::string, std::string, int = -1, bool = true, std::string = "");
 			virtual ~Button();
 			void update();
 			virtual void onMouseOver();
@@ -43,7 +43,7 @@ namespace vb01Gui{
 			vb01::Node *rectNode, *textNode = nullptr, *guiNode;
 			vb01::Vector2 pos, size;
 			vb01::Text *text = nullptr;
-			std::string name, imagePath;
+			std::string name, imagePath, texUni = "texturingEnabled", diffColUni = "diffuseColor";
 			std::vector<vb01::Texture*> textures;
 			vb01::Vector4 color = vb01::Vector4(.6, .6, .6, 1);
 	};

@@ -22,6 +22,7 @@ namespace vb01Gui{
 		else{
 			double x = *listbox->getMousePosX(), y = *listbox->getMousePosY();
 			Vector2 pos = listbox->getPos(), size = listbox->getSize();
+
 			if(x > pos.x + size.x - 20 && x < pos.x + size.x){
 				int scrollOffset = (listbox->getNumLines() - listbox->getMaxDisplay()) * (abs(y - pos.y) / (size.y * listbox->getMaxDisplay()));
 				Vector2 scrollButtonPos = listbox->getScrollingButton()->getPos();
@@ -51,16 +52,18 @@ namespace vb01Gui{
 		this->fontPath = fontPath;
 
 		mousePosX = new double, mousePosY = new double;
-		glfwGetCursorPos(Root::getSingleton()->getWindow(), mousePosX, mousePosY);
+		Root *root = Root::getSingleton();
+		glfwGetCursorPos(root->getWindow(), mousePosX, mousePosY);
 		guiNode = Root::getSingleton()->getGuiNode();
+		string texUni = "texturingEnabled", diffColUni = "diffuseColor";
 
 		for(int i = 0; i < lines.size(); i++){
 			Text *text = new Text(fontPath, stringToWstring(lines[i]));
 			text->setScale(.2);
 
-			Material *textMat = new Material(Material::MATERIAL_TEXT);
-			textMat->setTexturingEnabled(false);
-			textMat->setDiffuseColor(Vector4::VEC_IJKL);
+			Material *textMat = new Material(root->getLibPath() + "text");
+			textMat->addVariable(texUni, false);
+			textMat->addVariable(diffColUni, Vector4::VEC_IJKL);
 			text->setMaterial(textMat);
 
 			Node *node = new Node(Vector3(pos.x, pos.y + size.y * (i + 1), -.1));
@@ -79,9 +82,9 @@ namespace vb01Gui{
 
 		Quad *selRect = new Quad(Vector3(size.x, size.y, 0), false);
 		selRectNode = new Node(Vector3(size.x, size.y, -.05));
-		Material *mat = new Material(Material::MATERIAL_GUI);
-		mat->setTexturingEnabled(false);
-		mat->setDiffuseColor(Vector4(.6, .35, .05, 1));
+		Material *mat = new Material(root->getLibPath() + "gui");
+		mat->addVariable(texUni, false);
+		mat->addVariable(diffColUni, Vector4(.6, .35, .05, 1));
 		selRect->setMaterial(mat);
 		selRectNode->attachMesh(selRect);
 		selRectNode->setVisible(false);
@@ -109,6 +112,7 @@ namespace vb01Gui{
 		if(open){
 			glfwGetCursorPos(Root::getSingleton()->getWindow(), mousePosX, mousePosY);
 			Vector2 p = pos;
+
 			if(*mousePosY > pos.y && *mousePosY < pos.y + size.y * maxDisplay){
 				selectedOption = scrollOffset + ((int)(*mousePosY - pos.y) / ((int)size.y));
 				p.y = pos.y + size.y * ((int)(*mousePosY - pos.y) / ((int)size.y));
@@ -121,7 +125,9 @@ namespace vb01Gui{
 				selectedOption = lines.size() - 1;
 				p.y = pos.y + size.y * (maxDisplay - 1);
 			}
+
 			selRectNode->setPosition(Vector3(p.x, p.y, -.05));
+
 			for(int i = 0; i < maxDisplay; i++) {
 			}
 			/*

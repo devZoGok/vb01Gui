@@ -23,20 +23,22 @@ namespace vb01Gui{
 		this->imagePath = imagePath;
 		this->trigger = trigger;
 
-		guiNode = Root::getSingleton()->getGuiNode();
+		Root *root = Root::getSingleton();
+		guiNode = root->getGuiNode();
 		rect = new Quad(Vector3(size.x, size.y, 0), false);
 		rectNode = new Node(Vector3(pos.x, pos.y, 0));
-		Material *mat = new Material(Material::MATERIAL_GUI);
+		Material *mat = new Material(root->getLibPath() + "gui");
 
 		if(imagePath == ""){
-			mat->setTexturingEnabled(false);
-			mat->setDiffuseColor(color);
+			mat->addVariable(texUni, false);
+			mat->addVariable(diffColUni, color);
 		}
 		else{
-			mat->setTexturingEnabled(true);
+			mat->addVariable(texUni, true);
 			string frame[]{imagePath};
-			mat->addDiffuseMap(new Texture(frame, 1));
-			textures.push_back(mat->getDiffuseMap(0));
+			Texture *tex = new Texture(frame, 1);
+			mat->addVariable("diffuseMap", tex, false);
+			textures.push_back(tex);
 		}
 
 		rect->setMaterial(mat);
@@ -50,9 +52,9 @@ namespace vb01Gui{
 			textNode = new Node(Vector3(pos.x, pos.y + size.y, - .1));
 			textNode->addText(text);
 
-			Material *textMat = new Material(Material::MATERIAL_TEXT);
-			textMat->setTexturingEnabled(false);
-			textMat->setDiffuseColor(Vector4::VEC_IJKL);
+			Material *textMat = new Material(root->getLibPath() + "text");
+			textMat->addVariable(texUni, false);
+			textMat->addVariable(diffColUni, Vector4::VEC_IJKL);
 			text->setMaterial(textMat);
 
 			guiNode->attachChild(textNode);
@@ -113,7 +115,7 @@ namespace vb01Gui{
 
 	void Button::setColor(Vector4 c){
 		this->color = c;
-		rect->getMaterial()->setDiffuseColor(color);
+		((Material::Vector4Uniform*)rect->getMaterial()->getUniform(diffColUni))->value = color;
 	}
 	
 	void Button::setZOrder(float zOrder){

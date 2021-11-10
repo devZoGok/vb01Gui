@@ -38,9 +38,9 @@ namespace vb01Gui{
 		cursorPosOffset = entry.length();
 		cursorRect = new Quad(Vector3(cursorWidth, size.y, 0), false);
 		cursorNode = new Node(Vector3(pos.x + text->getLength(), pos.y, -.2));
-		Material *mat = new Material(Material::MATERIAL_GUI);
-		mat->setTexturingEnabled(false);
-		mat->setDiffuseColor(Vector4(1, 1, 1, 1));
+		Material *mat = new Material(Root::getSingleton()->getLibPath() + "gui");
+		mat->addVariable("texturingEnabled", false);
+		mat->addVariable("diffuseColor", Vector4(1, 1, 1, 1));
 		cursorRect->setMaterial(mat);
 		cursorNode->attachMesh(cursorRect);
 		cursorNode->setVisible(false);
