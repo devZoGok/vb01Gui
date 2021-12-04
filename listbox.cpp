@@ -62,8 +62,8 @@ namespace vb01Gui{
 			text->setScale(.2);
 
 			Material *textMat = new Material(root->getLibPath() + "text");
-			textMat->addVariable(texUni, false);
-			textMat->addVariable(diffColUni, Vector4::VEC_IJKL);
+			textMat->addBoolUniform(texUni, false);
+			textMat->addVec4Uniform(diffColUni, Vector4::VEC_IJKL);
 			text->setMaterial(textMat);
 
 			Node *node = new Node(Vector3(pos.x, pos.y + size.y * (i + 1), -.1));
@@ -83,8 +83,8 @@ namespace vb01Gui{
 		Quad *selRect = new Quad(Vector3(size.x, size.y, 0), false);
 		selRectNode = new Node(Vector3(size.x, size.y, -.05));
 		Material *mat = new Material(root->getLibPath() + "gui");
-		mat->addVariable(texUni, false);
-		mat->addVariable(diffColUni, Vector4(.6, .35, .05, 1));
+		mat->addBoolUniform(texUni, false);
+		mat->addVec4Uniform(diffColUni, Vector4(.6, .35, .05, 1));
 		selRect->setMaterial(mat);
 		selRectNode->attachMesh(selRect);
 		selRectNode->setVisible(false);

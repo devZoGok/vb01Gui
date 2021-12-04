@@ -30,14 +30,14 @@ namespace vb01Gui{
 		Material *mat = new Material(root->getLibPath() + "gui");
 
 		if(imagePath == ""){
-			mat->addVariable(texUni, false);
-			mat->addVariable(diffColUni, color);
+			mat->addBoolUniform(texUni, false);
+			mat->addVec4Uniform(diffColUni, color);
 		}
 		else{
-			mat->addVariable(texUni, true);
+			mat->addBoolUniform(texUni, true);
 			string frame[]{imagePath};
-			Texture *tex = new Texture(frame, 1);
-			mat->addVariable("diffuseMap", tex, false);
+			Texture *tex = new Texture(frame, 1, false);
+			mat->addTexUniform("diffuseMap", tex, false);
 			textures.push_back(tex);
 		}
 
@@ -53,8 +53,8 @@ namespace vb01Gui{
 			textNode->addText(text);
 
 			Material *textMat = new Material(root->getLibPath() + "text");
-			textMat->addVariable(texUni, false);
-			textMat->addVariable(diffColUni, Vector4::VEC_IJKL);
+			textMat->addBoolUniform(texUni, false);
+			textMat->addVec4Uniform(diffColUni, Vector4::VEC_IJKL);
 			text->setMaterial(textMat);
 
 			guiNode->attachChild(textNode);
@@ -133,7 +133,7 @@ namespace vb01Gui{
 		Material *mat = rect->getMaterial();
 
 		for(int i = 0; i < textures.size(); i++)
-			if(textures[i]->getPath() == image)
+			if(textures[i]->getPath()[0] == image)
 				texId = i;
 
 		/*
