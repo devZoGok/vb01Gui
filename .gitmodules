@@ -1,5 +1,3 @@
 [submodule "external/vb01"]
 	path = external/vb01
 	url = https://github.com/devZoGok/vb01
-[submodule "vb01"]
-	branch = pbr
