@@ -19,7 +19,7 @@ namespace vb01Gui{
 			void update();
 			void enable();
 			void disable();
-			void type(char, bool = false);
+			void type(vb01::u32, bool = false);
 			void moveCursor(bool, float);
 			void deleteCharacter();
 			void setEntry(std::wstring);
@@ -35,13 +35,14 @@ namespace vb01Gui{
 					Textbox *textbox;
 			};
 			inline bool canChangeCursor(){return vb01::getTime() - lastBlinkTime > 250;}
+			inline bool canDeleteChar(){return vb01::getTime() - lastDeleteTime > 50;}
 			const int cursorWidth = 5;
 			vb01::Vector2 pos, size;
 			std::wstring entry = L"";
 			std::string fontPath = "";
 			bool enabled = false, canShowCursor = false, capitalLeters = false;
 			TextboxButton *textboxButton;
-			vb01::s64 lastBlinkTime, cursorPosOffset = 0;
+			vb01::s64 lastBlinkTime = 0, lastDeleteTime = 0, cursorPosOffset = 0;
 			vb01::Quad *cursorRect;
 			vb01::Text *text;
 			vb01::Node *guiNode, *textNode, *cursorNode;

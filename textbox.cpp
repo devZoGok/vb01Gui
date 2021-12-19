@@ -27,10 +27,15 @@ namespace vb01Gui{
 		this->fontPath = fontPath;
 
 		textboxButton = new TextboxButton(this, pos, size, "TextboxButton");
+		string libPath = Root::getSingleton()->getLibPath();
 
 		guiNode = Root::getSingleton()->getGuiNode();
 		text = new Text(fontPath, entry);
 		text->setScale(.5);
+		Material *textMat = new Material(libPath + "text");
+		textMat->addBoolUniform("texturingEnabled", false);
+		textMat->addVec4Uniform("diffuseColor", Vector4(1, 1, 1, 1));
+		text->setMaterial(textMat);
 		textNode = new Node(Vector3(pos.x, pos.y + size.y, -.1));
 		textNode->addText(text);
 		guiNode->attachChild(textNode);
@@ -38,7 +43,7 @@ namespace vb01Gui{
 		cursorPosOffset = entry.length();
 		cursorRect = new Quad(Vector3(cursorWidth, size.y, 0), false);
 		cursorNode = new Node(Vector3(pos.x + text->getLength(), pos.y, -.2));
-		Material *mat = new Material(Root::getSingleton()->getLibPath() + "gui");
+		Material *mat = new Material(libPath + "gui");
 		mat->addBoolUniform("texturingEnabled", false);
 		mat->addVec4Uniform("diffuseColor", Vector4(1, 1, 1, 1));
 		cursorRect->setMaterial(mat);
@@ -64,12 +69,7 @@ namespace vb01Gui{
 		}
 	}
 
-	void Textbox::type(char c, bool capitalLetters){
-		if(capitalLetters && 'a' <= c && c <= 'z')
-			c -= 32;
-		else if(!capitalLetters && 'A' <= c && c <= 'Z')
-			c += 32;
-
+	void Textbox::type(u32 c, bool capitalLetters){
 		entry += c;
 		text->setText(entry);
 		moveCursor(false, text->getGlyph(c)->size.x);
@@ -89,11 +89,12 @@ namespace vb01Gui{
 	}
 
 	void Textbox::deleteCharacter(){
-		if(entry.length() > 0){
+		if(entry.length() > 0 && canDeleteChar()){
 			char c = entry.c_str()[entry.length() - 1];
 			entry = entry.substr(0, entry.length() - 1);
 			text->setText(entry);
 			moveCursor(true, text->getGlyph(c)->size.x);
+			lastDeleteTime = getTime();
 		}
 	}
 
