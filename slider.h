@@ -16,9 +16,7 @@ namespace vb01Gui{
         inline double getMinValue(){return minValue;}
         inline double getValue(){return value;}
         inline double getMaxValue(){return maxValue;}
-        inline double getIncrement(){return increment;}
         inline void setValue(double v){this->value=v;}
-        inline void setIncrement(double i){this->increment=i;}
         inline vb01::Vector2 getPos(){return pos;}
         inline vb01::Vector2 getSize(){return size;}
         inline Textbox* getTextbox(){return textbox;}
@@ -43,7 +41,7 @@ namespace vb01Gui{
 
         MovableSliderButton *movableSliderButton = nullptr;
         StaticSliderButton *staticSliderButton = nullptr;
-        double minValue, value, maxValue, increment = .1;
+        double minValue, value, maxValue;
 				vb01::Vector2 pos, size;
         Textbox *textbox = nullptr;
     public:

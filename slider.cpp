@@ -62,15 +62,9 @@ namespace vb01Gui{
         else if (value > maxValue)
             value = maxValue;
 
+        Vector2 p = movableSliderButton->getPos(), s = movableSliderButton->getSize();
+        p.x = pos.x + (double) size.x / maxValue * value;
         movableSliderButton->update();
-
-				/*
-        driver->draw2DRectangle(*staticSliderButton->getColor(), rect<s32>(pos.X, pos.Y, pos.X + size.X, pos.Y + size.Y), nullptr);
-        vector2d<s32> p = movableSliderButton->getPos(), s = movableSliderButton->getSize();
-
-        p.X = pos.X + (double) size.X / maxValue * value;
-        driver->draw2DRectangle(SColor(255, 200, 200, 200), rect<s32>(p.X, p.Y, p.X + s.X, p.Y + s.Y), nullptr);
         movableSliderButton->setPos(p);
-				*/
     }
 }
