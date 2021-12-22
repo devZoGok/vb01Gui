@@ -6,15 +6,16 @@
 namespace vb01{
 		class Quad;
 		class Node;
+		class Text;
 }
 
 namespace vb01Gui{
     class Checkbox {
     public:
-        Checkbox(vb01::Vector2);
+        Checkbox(vb01::Vector2, std::string);
         ~Checkbox();
-        void update();
-        virtual void check(){checked = !checked;}
+        void update(){}
+        virtual void check();
         virtual bool isChecked(){return checked;}
     private:
         class CheckboxButton : public Button {
@@ -29,6 +30,7 @@ namespace vb01Gui{
         bool checked = false;
 				vb01::Vector2 pos;
         CheckboxButton *checkboxButton;
+				vb01::Node *checkNode = nullptr;
     public:
         inline CheckboxButton* getCheckboxButton(){return checkboxButton;}
     };
