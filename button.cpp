@@ -87,6 +87,11 @@ namespace vb01Gui{
 
 			initWindowSize[0] = width;
 			initWindowSize[1] = height;
+
+		if(textNode)
+			textNode->setVisible(active);
+
+		rectNode->setVisible(active);
 	}
 
 	void Button::onMouseOver(){

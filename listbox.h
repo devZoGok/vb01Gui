@@ -42,8 +42,6 @@ namespace vb01Gui{
 			std::vector<std::wstring> getContents();
 			inline vb01::Vector2 getPos(){return pos;} 
 			inline vb01::Vector2 getSize(){return size;} 
-			inline double* getMousePosX(){return mousePosX;}
-			inline double* getMousePosY(){return mousePosY;}
 		private: 
 			class ScrollingButton : public Button{
 				public:
@@ -54,7 +52,7 @@ namespace vb01Gui{
 
 			std::string convert(std::string);
 
-			double *mousePosX, *mousePosY;
+			float textZCoord = -.3, lineHeight;
 			int maxDisplay, scrollOffset = 0, selectedOption = 0;
 			bool open = false;
 			std::vector<vb01::Text*> lines;
