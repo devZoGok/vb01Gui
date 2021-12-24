@@ -2,11 +2,14 @@
 #include <node.h>
 #include <quad.h>
 #include <material.h>
+#include <util.h>
+
+#include <algorithm>
 #include <sstream>
 #include <ostream>
-#include <algorithm>
 
 #include "textbox.h"
+#include "slider.h"
 
 using namespace vb01;
 using namespace std;
@@ -42,7 +45,7 @@ namespace vb01Gui{
 
 		cursorPosOffset = entry.length();
 		cursorRect = new Quad(Vector3(cursorWidth, size.y, 0), false);
-		cursorNode = new Node(Vector3(pos.x + text->getLength(), pos.y, -.2));
+		cursorNode = new Node(Vector3(pos.x + text->getLength(), pos.y, cursorZCoord));
 		Material *mat = new Material(libPath + "gui");
 		mat->addBoolUniform("texturingEnabled", false);
 		mat->addVec4Uniform("diffuseColor", Vector4(1, 1, 1, 1));
@@ -107,12 +110,23 @@ namespace vb01Gui{
 	void Textbox::disable(){
 		enabled = false;
 		cursorNode->setVisible(false);
+
+		if(slider){
+				float val = strtof(wstringToString(entry).c_str(), nullptr);
+				
+				if(val < slider->getMinValue())
+						val = slider->getMinValue();
+				else if(val > slider->getMaxValue())
+						val = slider->getMaxValue();
+
+				slider->setValue(val);
+		}
 	}
 
 	void Textbox::setEntry(wstring entry){
 		this->entry = entry;
 		text->setText(entry);
-		cursorNode->setPosition(Vector3(pos.x + text->getLength(), pos.y, 1));
+		cursorNode->setPosition(Vector3(pos.x + text->getLength(), pos.y, cursorZCoord));
 		cursorPosOffset = entry.length();
 	}
 }

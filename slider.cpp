@@ -4,6 +4,7 @@
 #include <glfw3.h>
 #include <algorithm>
 #include <util.h>
+
 #include <sstream>
 
 using namespace std;
@@ -66,5 +67,11 @@ namespace vb01Gui{
         p.x = pos.x + (double) size.x / maxValue * value;
         movableSliderButton->update();
         movableSliderButton->setPos(p);
+
+				if(textbox && !textbox->isEnabled()){
+						ostringstream ss;
+						ss << value;
+						textbox->setEntry(stringToWstring(ss.str()));
+				}
     }
 }

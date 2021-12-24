@@ -12,7 +12,7 @@ namespace vb01Gui{
         Slider(vb01::Vector2, vb01::Vector2, double, double);
         ~Slider();
         void update();
-        inline void addTextbox(Textbox *t){this->textbox=t;}
+        inline void setTextbox(Textbox *t){this->textbox=t;}
         inline double getMinValue(){return minValue;}
         inline double getValue(){return value;}
         inline double getMaxValue(){return maxValue;}
