@@ -33,7 +33,10 @@ namespace vb01Gui{
 			void scrollDown();
 			void addLine(std::wstring);
 			void changeLine(int, std::wstring);
+			void scrollToHeight(float);
 			inline ListboxType getType(){return type;}
+			inline int getScrollOffset(){return scrollOffset;}
+			inline float getLineHeight(){return lineHeight;}
 			inline bool isOpen(){return open;}
 			void appendLines(std::vector<std::wstring>&);
 			inline int getSelectedOption(){return selectedOption;}

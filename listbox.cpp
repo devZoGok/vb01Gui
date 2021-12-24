@@ -39,7 +39,12 @@ namespace vb01Gui{
 			else if(type == STOCK&&listbox->isOpen())
 				listbox->close();
 			*/
-			listbox->close();
+				Vector2 cursorPos = getCursorPos();
+
+				if(cursorPos.x < listbox->getScrollingButton()->getPos().x)
+					listbox->close();
+				else
+					listbox->scrollToHeight(cursorPos.y);
 		}
 	}
 
@@ -139,6 +144,19 @@ namespace vb01Gui{
 			Vector2 scrollButtonPos = Vector2(pos.x + size.x - 20, pos.y + lineHeight + lineHeight * scrollOffset * (double(maxDisplay - 2) / (maxDisplay + 1)));
 			scrollingButton->setPos(scrollButtonPos);
 		} 
+	}
+
+	void Listbox::scrollToHeight(float clickPos){
+		float clickHeight = clickPos - (pos.y + lineHeight);
+		int newOffset = clickHeight / (lineHeight * (maxDisplay - 2) / (maxDisplay + 1));
+		int diffOffset = scrollOffset - newOffset;
+
+		for(int i = 0; i < abs(diffOffset); ++i){
+				if(diffOffset > 0)
+					scrollUp();
+				else
+					scrollDown();
+		}
 	}
 
 	void Listbox::openUp(){
