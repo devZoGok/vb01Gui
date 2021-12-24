@@ -14,8 +14,6 @@ namespace vb01{
 namespace vb01Gui{
 	class Listbox{
 		public: 
-			enum ListboxType{STOCK, CONTROLS};
-
 			class ListboxButton : public Button{
 				public:
 					ListboxButton(Listbox*, vb01::Vector2, vb01::Vector2, std::string);
@@ -24,7 +22,7 @@ namespace vb01Gui{
 					Listbox *listbox = nullptr;
 			};
 
-			Listbox(vb01::Vector2, vb01::Vector2, std::vector<std::string>&, int, std::string, ListboxType = STOCK);
+			Listbox(vb01::Vector2, vb01::Vector2, std::vector<std::string>&, int, std::string, bool = true);
 			~Listbox();
 			void update();
 			void openUp();
@@ -34,10 +32,10 @@ namespace vb01Gui{
 			void addLine(std::wstring);
 			void changeLine(int, std::wstring);
 			void scrollToHeight(float);
-			inline ListboxType getType(){return type;}
 			inline int getScrollOffset(){return scrollOffset;}
 			inline float getLineHeight(){return lineHeight;}
 			inline bool isOpen(){return open;}
+			inline bool isCloseable(){return closeable;}
 			void appendLines(std::vector<std::wstring>&);
 			inline int getSelectedOption(){return selectedOption;}
 			inline int getMaxDisplay(){return maxDisplay;}
@@ -57,14 +55,13 @@ namespace vb01Gui{
 
 			float textZCoord = -.3, lineHeight;
 			int maxDisplay, scrollOffset = 0, selectedOption = 0;
-			bool open = false;
+			bool open = false, closeable = false;
 			std::vector<vb01::Text*> lines;
 			std::string fontPath;
 			vb01::Vector2 pos, size;
 			ListboxButton *listboxButton;
 			ScrollingButton *scrollingButton;
 			vb01::Node *selRectNode, *guiNode;
-			ListboxType type;
 		public: 
 			inline ListboxButton* getListboxButton(){return listboxButton;}
 			inline ScrollingButton* getScrollingButton(){return scrollingButton;}

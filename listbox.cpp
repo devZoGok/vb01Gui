@@ -15,34 +15,15 @@ namespace vb01Gui{
 	Listbox::ListboxButton::ListboxButton(Listbox *l, Vector2 pos, Vector2 size, string name) : Button(pos, size, name, "", -1, false){listbox = l;}
 
 	void Listbox::ListboxButton::onClick(){
-		ListboxType type = listbox->getType();
-
-		if(type != CONTROLS && !listbox->isOpen())
+		if(!listbox->isOpen())
 			listbox->openUp();
 		else{
-			/*
-			double x = *listbox->getMousePosX(), y = *listbox->getMousePosY();
-			Vector2 pos = listbox->getPos(), size = listbox->getSize();
-
-			if(x > pos.x + size.x - 20 && x < pos.x + size.x){
-				int scrollOffset = (listbox->getNumLines() - listbox->getMaxDisplay()) * (abs(y - pos.y) / (size.y * listbox->getMaxDisplay()));
-				Vector2 scrollButtonPos = listbox->getScrollingButton()->getPos();
-
-				for(int i = 0; i < scrollOffset; i++)
-					if(y > scrollButtonPos.y)
-						listbox->scrollDown();
-					else
-						listbox->scrollUp();
-
-				listbox->getScrollingButton()->setPos(Vector2(pos.x + size.x - 20, y));
-			}
-			else if(type == STOCK&&listbox->isOpen())
-				listbox->close();
-			*/
 				Vector2 cursorPos = getCursorPos();
 
-				if(cursorPos.x < listbox->getScrollingButton()->getPos().x)
-					listbox->close();
+				if(cursorPos.x < listbox->getScrollingButton()->getPos().x){
+					if(listbox->isCloseable())
+						listbox->close();
+				}
 				else
 					listbox->scrollToHeight(cursorPos.y);
 		}
@@ -52,13 +33,13 @@ namespace vb01Gui{
 
 	void Listbox::ScrollingButton::onClick(){}
 
-	Listbox::Listbox(Vector2 pos, Vector2 size, std::vector<string> &lines, int maxDisplay, string fontPath, ListboxType type){
+	Listbox::Listbox(Vector2 pos, Vector2 size, std::vector<string> &lines, int maxDisplay, string fontPath, bool closeable){
 		this->pos = pos;
 		this->size = size; 
 		this->maxDisplay = maxDisplay;
-		this->type = type;
 		this->fontPath = fontPath;
 		this->lineHeight = size.y;
+		this->closeable = closeable;
 
 		Root *root = Root::getSingleton();
 		Vector2 mousePos = getCursorPos();
@@ -101,7 +82,7 @@ namespace vb01Gui{
 		selRectNode->setVisible(false);
 		guiNode->attachChild(selRectNode);
 
-		if(type == CONTROLS)
+		if(!closeable)
 			openUp();
 	}
 
@@ -135,7 +116,7 @@ namespace vb01Gui{
 				p.y = pos.y;
 			}
 			else{
-				selectedOption = lines.size() - 1;
+				selectedOption = (maxDisplay + scrollOffset) - 1;
 				p.y = pos.y + size.y * (maxDisplay - 1);
 			}
 
