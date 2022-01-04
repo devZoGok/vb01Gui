@@ -16,5 +16,5 @@ set(LIB_NAME vb01Gui)
 add_library(vb01Gui ${core})
 
 link_directories(../../build/external/vb01)
-target_link_directories(${LIB_NAME} PUBLIC vb01)
+target_link_libraries(${LIB_NAME} PUBLIC vb01)
 
