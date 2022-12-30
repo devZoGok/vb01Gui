@@ -32,6 +32,8 @@ namespace vb01Gui{
 			void addLine(std::wstring);
 			void changeLine(int, std::wstring);
 			void scrollToHeight(float);
+			virtual void onOpen(){}
+			virtual void onClose(){}
 			inline int getScrollOffset(){return scrollOffset;}
 			inline float getLineHeight(){return lineHeight;}
 			inline bool isOpen(){return open;}
@@ -54,14 +56,16 @@ namespace vb01Gui{
 			std::string convert(std::string);
 
 			float textZCoord = -.3, lineHeight;
-			int maxDisplay, scrollOffset = 0, selectedOption = 0;
+			int maxDisplay, scrollOffset = 0;
 			bool open = false, closeable = false;
-			std::vector<vb01::Text*> lines;
 			std::string fontPath;
 			vb01::Vector2 pos, size;
 			ListboxButton *listboxButton;
 			ScrollingButton *scrollingButton;
 			vb01::Node *selRectNode, *guiNode;
+		protected:
+		   	int selectedOption = 0;
+			std::vector<vb01::Text*> lines;
 		public: 
 			inline ListboxButton* getListboxButton(){return listboxButton;}
 			inline ScrollingButton* getScrollingButton(){return scrollingButton;}

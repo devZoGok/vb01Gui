@@ -152,6 +152,8 @@ namespace vb01Gui{
 
 		for(int i = scrollOffset; i < scrollOffset + maxDisplay; i++)
 			lines[i]->getNode()->setVisible(true);
+
+		onOpen();
 	}
 
 	void Listbox::close(){
@@ -167,6 +169,8 @@ namespace vb01Gui{
 
 		lines[selectedOption]->getNode()->setPosition(Vector3(pos.x, pos.y + size.y, textZCoord));
 		lines[selectedOption]->getNode()->setVisible(true);
+
+		onClose();
 	}
 
 	void Listbox::scrollUp(){
