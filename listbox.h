@@ -63,9 +63,9 @@ namespace vb01Gui{
 			ListboxButton *listboxButton;
 			ScrollingButton *scrollingButton;
 			vb01::Node *selRectNode, *guiNode;
+			std::vector<vb01::Text*> lines;
 		protected:
 		   	int selectedOption = 0;
-			std::vector<vb01::Text*> lines;
 		public: 
 			inline ListboxButton* getListboxButton(){return listboxButton;}
 			inline ScrollingButton* getScrollingButton(){return scrollingButton;}
